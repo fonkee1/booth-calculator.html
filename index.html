@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 25.2.3.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
+		pre { font-size: 10pt; font-family: "Liberation Mono", monospace; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Exhibit Space Calculator - Be Unique Exhibits&lt;/title&gt;
+    &lt;!-- Tailwind CSS --&gt;
+    &lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            DEFAULT: '#39b54a', // Be Unique Green
+                            glow: '#39b54a',
+                            dark: '#267a32'
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+    &lt;!-- Google Fonts --&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;!-- Lucide Icons --&gt;
+    &lt;script src=&quot;https://unpkg.com/lucide@latest&quot;&gt;&lt;/script&gt;
+    
+    &lt;style&gt;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #e2e8f0;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #39b54a; 
+            border-radius: 4px;
+        }
+
+        /* Blueprint Grid Background */
+        .blueprint-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* Booth Box Animation */
+        .booth-box {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 25px rgba(57, 181, 74, 0.3), inset 0 0 20px rgba(57, 181, 74, 0.1);
+        }
+        
+        /* Input styling overrides */
+        input[type=&quot;number&quot;]::-webkit-inner-spin-button,
+        input[type=&quot;number&quot;]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .preset-btn:hover {
+            box-shadow: 0 0 15px rgba(57, 181, 74, 0.2);
+        }
+
+        /* Floating particles animation */
+        @keyframes float {
+            0% { transform: translateY(0px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-20px); opacity: 0; }
+        }
+        .particle {
+            position: absolute;
+            background: #39b54a;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 2s linear forwards;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class=&quot;min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-x-hidden&quot;&gt;
+
+    &lt;!-- Background decorative glows --&gt;
+    &lt;div class=&quot;fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none&quot;&gt;
+        &lt;div class=&quot;absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand/10 rounded-full blur-[120px]&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand/10 rounded-full blur-[120px]&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Main Container --&gt;
+    &lt;div class=&quot;w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10&quot;&gt;
+        
+        &lt;!-- Header &amp; Controls Section --&gt;
+        &lt;div class=&quot;lg:col-span-5 flex flex-col gap-6&quot;&gt;
+            
+            &lt;!-- Header --&gt;
+            &lt;div class=&quot;glass-panel p-6 rounded-2xl shadow-xl border-l-4 border-brand&quot;&gt;
+                &lt;div class=&quot;mb-1&quot;&gt;
+                    &lt;span class=&quot;text-[10px] font-bold tracking-[0.2em] text-brand uppercase&quot;&gt;Presented by Be Unique Exhibits&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;flex items-center gap-3 mb-2&quot;&gt;
+                    &lt;i data-lucide=&quot;layout-grid&quot; class=&quot;text-brand w-8 h-8&quot;&gt;&lt;/i&gt;
+                    &lt;h1 class=&quot;text-3xl font-extrabold text-white tracking-tight&quot;&gt;EXHIBIT &lt;span class=&quot;text-brand&quot;&gt;Estimator&lt;/span&gt;&lt;/h1&gt;
+                &lt;/div&gt;
+                &lt;p class=&quot;text-slate-400 text-sm&quot;&gt;Calculate square footage and projected costs for your custom booth configuration.&lt;/p&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Controls --&gt;
+            &lt;div class=&quot;glass-panel p-6 rounded-2xl shadow-xl flex-grow flex flex-col justify-between&quot;&gt;
+                
+                &lt;!-- Quick Presets --&gt;
+                &lt;div class=&quot;mb-8&quot;&gt;
+                    &lt;label class=&quot;text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 block&quot;&gt;Quick Configurations&lt;/label&gt;
+                    &lt;div class=&quot;grid grid-cols-3 gap-3&quot;&gt;
+                        &lt;button onclick=&quot;setPreset(10, 10)&quot; class=&quot;preset-btn hover:bg-brand/10 hover:border-brand border border-slate-700 bg-slate-800/50 py-3 rounded-xl transition-all duration-200 text-sm font-semibold text-slate-300 hover:text-brand&quot;&gt;10' x 10'&lt;/button&gt;
+                        &lt;button onclick=&quot;setPreset(10, 20)&quot; class=&quot;preset-btn hover:bg-brand/10 hover:border-brand border border-slate-700 bg-slate-800/50 py-3 rounded-xl transition-all duration-200 text-sm font-semibold text-slate-300 hover:text-brand&quot;&gt;10' x 20'&lt;/button&gt;
+                        &lt;button onclick=&quot;setPreset(20, 20)&quot; class=&quot;preset-btn hover:bg-brand/10 hover:border-brand border border-slate-700 bg-slate-800/50 py-3 rounded-xl transition-all duration-200 text-sm font-semibold text-slate-300 hover:text-brand&quot;&gt;20' x 20'&lt;/button&gt;
+                        &lt;button onclick=&quot;setPreset(20, 30)&quot; class=&quot;preset-btn hover:bg-brand/10 hover:border-brand border border-slate-700 bg-slate-800/50 py-3 rounded-xl transition-all duration-200 text-sm font-semibold text-slate-300 hover:text-brand&quot;&gt;20' x 30'&lt;/button&gt;
+                        &lt;button onclick=&quot;setPreset(30, 30)&quot; class=&quot;preset-btn hover:bg-brand/10 hover:border-brand border border-slate-700 bg-slate-800/50 py-3 rounded-xl transition-all duration-200 text-sm font-semibold text-slate-300 hover:text-brand&quot;&gt;30' x 30'&lt;/button&gt;
+                        &lt;button onclick=&quot;setPreset(50, 50)&quot; class=&quot;preset-btn hover:bg-brand/10 hover:border-brand border border-slate-700 bg-slate-800/50 py-3 rounded-xl transition-all duration-200 text-sm font-semibold text-slate-300 hover:text-brand&quot;&gt;50' x 50'&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Custom Dimensions --&gt;
+                &lt;div class=&quot;mb-8&quot;&gt;
+                    &lt;label class=&quot;text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 block&quot;&gt;Dimensions (ft)&lt;/label&gt;
+                    &lt;div class=&quot;flex gap-4&quot;&gt;
+                        &lt;div class=&quot;flex-1 relative group&quot;&gt;
+                            &lt;label class=&quot;text-[10px] text-brand font-bold absolute top-2 left-3&quot;&gt;Width&lt;/label&gt;
+                            &lt;input type=&quot;number&quot; id=&quot;widthInput&quot; value=&quot;10&quot; min=&quot;5&quot; max=&quot;200&quot; class=&quot;w-full bg-slate-900/80 border border-slate-700 focus:border-brand rounded-xl pt-6 pb-2 px-3 text-lg font-bold text-white outline-none transition-colors&quot;&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;flex items-center text-slate-600 font-bold&quot;&gt;×&lt;/div&gt;
+                        &lt;div class=&quot;flex-1 relative group&quot;&gt;
+                            &lt;label class=&quot;text-[10px] text-brand font-bold absolute top-2 left-3&quot;&gt;Depth&lt;/label&gt;
+                            &lt;input type=&quot;number&quot; id=&quot;depthInput&quot; value=&quot;10&quot; min=&quot;5&quot; max=&quot;200&quot; class=&quot;w-full bg-slate-900/80 border border-slate-700 focus:border-brand rounded-xl pt-6 pb-2 px-3 text-lg font-bold text-white outline-none transition-colors&quot;&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Pricing --&gt;
+                &lt;div&gt;
+                    &lt;label class=&quot;text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 block&quot;&gt;Pricing&lt;/label&gt;
+                    &lt;div class=&quot;relative group&quot;&gt;
+                        &lt;label class=&quot;text-[10px] text-brand font-bold absolute top-2 left-3&quot;&gt;Rate per Sq. Ft.&lt;/label&gt;
+                        &lt;div class=&quot;absolute bottom-2 left-3 text-slate-400 font-bold text-lg&quot;&gt;$&lt;/div&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;priceInput&quot; value=&quot;51.50&quot; step=&quot;0.50&quot; class=&quot;w-full bg-slate-900/80 border border-slate-700 focus:border-brand rounded-xl pt-6 pb-2 pl-7 pr-3 text-lg font-bold text-white outline-none transition-colors&quot;&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Visualization &amp; Results --&gt;
+        &lt;div class=&quot;lg:col-span-7 flex flex-col gap-6&quot;&gt;
+            
+            &lt;!-- Visualizer Box --&gt;
+            &lt;div class=&quot;glass-panel rounded-2xl p-1 overflow-hidden relative h-[400px] flex items-center justify-center blueprint-grid&quot; id=&quot;visualizerContainer&quot;&gt;
+                
+                &lt;!-- Measurements Display (Floating) --&gt;
+                &lt;div class=&quot;absolute top-4 right-4 bg-slate-900/90 backdrop-blur px-3 py-1 rounded-full border border-slate-700 text-xs font-mono text-brand&quot;&gt;
+                    &lt;span id=&quot;displayDims&quot;&gt;10' x 10'&lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;!-- The Dynamic Booth --&gt;
+                &lt;div id=&quot;boothShape&quot; class=&quot;booth-box relative bg-brand/10 border-2 border-brand flex items-center justify-center group cursor-pointer&quot;&gt;
+                    &lt;!-- Center Grid Effect --&gt;
+                    &lt;div class=&quot;absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8cGF0aCBkPSJNMCAwTDggOFpNOCAwTDAgOFoiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLW9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==')]&quot;&gt;&lt;/div&gt;
+                    
+                    &lt;!-- Center SqFt Text --&gt;
+                    &lt;div class=&quot;text-center z-10 transition-transform duration-300 group-hover:scale-110&quot;&gt;
+                        &lt;div id=&quot;visualArea&quot; class=&quot;text-white font-extrabold text-2xl drop-shadow-md&quot;&gt;100&lt;/div&gt;
+                        &lt;div class=&quot;text-brand text-xs font-bold uppercase tracking-widest&quot;&gt;Sq. Ft.&lt;/div&gt;
+                    &lt;/div&gt;
+
+                    &lt;!-- Dimension Lines (Decorative) --&gt;
+                    &lt;div class=&quot;absolute -bottom-6 left-0 w-full flex items-center justify-center&quot;&gt;
+                        &lt;div class=&quot;h-px bg-slate-500 w-full relative&quot;&gt;
+                            &lt;div class=&quot;absolute left-0 -top-1 h-3 w-px bg-slate-500&quot;&gt;&lt;/div&gt;
+                            &lt;div class=&quot;absolute right-0 -top-1 h-3 w-px bg-slate-500&quot;&gt;&lt;/div&gt;
+                            &lt;div class=&quot;absolute top-2 left-1/2 -translate-x-1/2 text-slate-400 text-xs font-mono&quot; id=&quot;widthLabel&quot;&gt;10'&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;absolute -left-6 top-0 h-full flex items-center justify-center flex-col&quot;&gt;
+                        &lt;div class=&quot;w-px bg-slate-500 h-full relative&quot;&gt;
+                            &lt;div class=&quot;absolute top-0 -left-1 w-3 h-px bg-slate-500&quot;&gt;&lt;/div&gt;
+                            &lt;div class=&quot;absolute bottom-0 -left-1 w-3 h-px bg-slate-500&quot;&gt;&lt;/div&gt;
+                            &lt;div class=&quot;absolute left-[-25px] top-1/2 -translate-y-1/2 text-slate-400 text-xs -rotate-90 font-mono&quot; id=&quot;depthLabel&quot;&gt;10'&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+            &lt;!-- Cost Summary --&gt;
+            &lt;div class=&quot;grid grid-cols-1 md:grid-cols-2 gap-6&quot;&gt;
+                
+                &lt;!-- Area Calculation --&gt;
+                &lt;div class=&quot;glass-panel p-6 rounded-2xl border-l-4 border-slate-500 relative overflow-hidden&quot;&gt;
+                     &lt;div class=&quot;absolute right-0 top-0 w-24 h-24 bg-brand/5 rounded-full blur-2xl pointer-events-none&quot;&gt;&lt;/div&gt;
+                    &lt;div class=&quot;flex items-center justify-between mb-2&quot;&gt;
+                        &lt;span class=&quot;text-slate-400 text-sm font-bold uppercase tracking-wider&quot;&gt;Total Area&lt;/span&gt;
+                        &lt;i data-lucide=&quot;maximize&quot; class=&quot;text-slate-400 w-5 h-5&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex items-baseline gap-1&quot;&gt;
+                        &lt;span id=&quot;resultArea&quot; class=&quot;text-3xl font-extrabold text-white&quot;&gt;100&lt;/span&gt;
+                        &lt;span class=&quot;text-slate-500 font-medium&quot;&gt;sq. ft.&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;mt-2 text-xs text-slate-500&quot;&gt;
+                        Based on &lt;span id=&quot;textWidth&quot;&gt;10&lt;/span&gt;' Width × &lt;span id=&quot;textDepth&quot;&gt;10&lt;/span&gt;' Depth
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Cost Summary --&gt;
+                &lt;div class=&quot;glass-panel p-6 rounded-2xl border-l-4 border-brand bg-gradient-to-br from-slate-800 to-slate-900 relative overflow-hidden&quot;&gt;
+                    &lt;div class=&quot;absolute right-0 top-0 w-32 h-32 bg-brand/10 rounded-full blur-2xl pointer-events-none&quot;&gt;&lt;/div&gt;
+                    
+                    &lt;!-- Clear All Button --&gt;
+                    &lt;button onclick=&quot;clearAll()&quot; class=&quot;relative z-20 block mx-auto mb-2 text-[10px] font-bold text-slate-500 hover:text-white tracking-[0.2em] uppercase transition-colors hover:scale-105 transform&quot;&gt;
+                        &lt;span class=&quot;border-b border-transparent hover:border-white pb-0.5&quot;&gt;Clear All&lt;/span&gt;
+                    &lt;/button&gt;
+
+                    &lt;div class=&quot;flex items-center justify-between mb-2 relative z-10&quot;&gt;
+                        &lt;span class=&quot;text-brand text-sm font-bold uppercase tracking-wider&quot;&gt;Estimated Cost&lt;/span&gt;
+                        &lt;i data-lucide=&quot;dollar-sign&quot; class=&quot;text-brand w-5 h-5&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex items-baseline gap-1 relative z-10&quot;&gt;
+                        &lt;span id=&quot;resultCost&quot; class=&quot;text-4xl font-extrabold text-white tracking-tight&quot;&gt;$5,150.00&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;mt-2 text-xs text-slate-400 relative z-10&quot;&gt;
+                        Calculated at $&lt;span id=&quot;textPrice&quot;&gt;51.50&lt;/span&gt; per sq. ft.
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        // Use DOMContentLoaded to ensure elements exist before referencing them
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            
+            // Initialize Lucide Icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // Element References
+            const widthInput = document.getElementById('widthInput');
+            const depthInput = document.getElementById('depthInput');
+            const priceInput = document.getElementById('priceInput');
+            
+            const boothShape = document.getElementById('boothShape');
+            const container = document.getElementById('visualizerContainer');
+            
+            const visualArea = document.getElementById('visualArea');
+            const resultArea = document.getElementById('resultArea');
+            const resultCost = document.getElementById('resultCost');
+            
+            const textWidth = document.getElementById('textWidth');
+            const textDepth = document.getElementById('textDepth');
+            const textPrice = document.getElementById('textPrice');
+            const displayDims = document.getElementById('displayDims');
+            const widthLabel = document.getElementById('widthLabel');
+            const depthLabel = document.getElementById('depthLabel');
+
+            // State
+            let currentCost = 0;
+
+            // Functions defined inside the listener to access elements
+            
+            // Attached to window so HTML onlick attributes can find them
+            window.calculate = function() {
+                let width = 0;
+                let depth = 0;
+                let price = 0;
+
+                if (widthInput) width = parseFloat(widthInput.value) || 0;
+                if (depthInput) depth = parseFloat(depthInput.value) || 0;
+                if (priceInput) price = parseFloat(priceInput.value) || 0;
+
+                // Clamping for sanity
+                if (width &lt; 0) width = 0;
+                if (depth &lt; 0) depth = 0;
+
+                const area = width * depth;
+                const cost = area * price;
+
+                // Update Text with Safe Checks
+                if (visualArea) visualArea.textContent = area.toLocaleString();
+                if (resultArea) resultArea.textContent = area.toLocaleString();
+                
+                if (resultCost) {
+                    animateValue(resultCost, currentCost, cost, 500);
+                    currentCost = cost;
+                }
+
+                if (textWidth) textWidth.textContent = width;
+                if (textDepth) textDepth.textContent = depth;
+                if (textPrice) textPrice.textContent = price.toFixed(2);
+                if (displayDims) displayDims.textContent = `${width}' x ${depth}'`;
+                if (widthLabel) widthLabel.textContent = `${width}'`;
+                if (depthLabel) depthLabel.textContent = `${depth}'`;
+
+                updateVisualizer(width, depth);
+            }
+
+            function updateVisualizer(width, depth) {
+                if (!container || !boothShape) return;
+
+                // Get container dimensions
+                const containerW = container.clientWidth;
+                const containerH = container.clientHeight;
+                const padding = 70; // Increased padding for labels
+
+                const availW = containerW - padding;
+                const availH = containerH - padding;
+                
+                // Calculate scale
+                let scale = Math.min(availW / width, availH / depth);
+
+                // Cap the scale
+                const maxScale = 25; 
+                if (scale &gt; maxScale) scale = maxScale;
+
+                // If dimensions are 0
+                if (width === 0 || depth === 0) scale = 0;
+
+                const finalW = width * scale;
+                const finalH = depth * scale;
+
+                // Apply styles
+                boothShape.style.width = `${finalW}px`;
+                boothShape.style.height = `${finalH}px`;
+            }
+
+            // Animated Number Counter
+            function animateValue(obj, start, end, duration) {
+                if (!obj) return;
+                let startTimestamp = null;
+                const step = (timestamp) =&gt; {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const ease = 1 - Math.pow(1 - progress, 4);
+                    const currentVal = start + (end - start) * ease;
+                    
+                    obj.innerHTML = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                    }).format(currentVal);
+
+                    if (progress &lt; 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // Preset Handler - Attached to window
+            window.setPreset = function(w, d) {
+                if (widthInput) widthInput.value = w;
+                if (depthInput) depthInput.value = d;
+                
+                // Trigger animation effect on inputs
+                if (widthInput &amp;&amp; widthInput.parentElement) {
+                    widthInput.parentElement.classList.add('scale-105');
+                    setTimeout(() =&gt; widthInput.parentElement.classList.remove('scale-105'), 150);
+                }
+                
+                window.calculate();
+                createParticles();
+            };
+
+            // Clear All Function - Attached to window
+            window.clearAll = function() {
+                if (widthInput) widthInput.value = 0;
+                if (depthInput) depthInput.value = 0;
+                if (priceInput) priceInput.value = 51.50;
+                
+                window.calculate();
+                
+                if (resultCost) {
+                    const costCard = resultCost.closest('.glass-panel');
+                    if (costCard) {
+                        costCard.classList.add('brightness-150');
+                        setTimeout(() =&gt; costCard.classList.remove('brightness-150'), 200);
+                    }
+                }
+            };
+
+            // Click Effect (Particles)
+            function createParticles() {
+                if (!boothShape) return;
+                const rect = boothShape.getBoundingClientRect();
+
+                for (let i = 0; i &lt; 5; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    const size = Math.random() * 6 + 2;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${(rect.width/2) + (Math.random() * 40 - 20)}px`;
+                    particle.style.top = `${(rect.height/2) + (Math.random() * 40 - 20)}px`;
+                    boothShape.appendChild(particle);
+                    setTimeout(() =&gt; particle.remove(), 2000);
+                }
+            }
+
+            // Listeners
+            if (widthInput) widthInput.addEventListener('input', window.calculate);
+            if (depthInput) depthInput.addEventListener('input', window.calculate);
+            if (priceInput) priceInput.addEventListener('input', window.calculate);
+            window.addEventListener('resize', window.calculate);
+
+            // Initial Run
+            window.calculate();
+
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</body>
+</html>
